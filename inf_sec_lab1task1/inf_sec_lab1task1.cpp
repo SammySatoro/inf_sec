@@ -1,6 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -67,11 +70,107 @@ void decode(ifstream& inTextFile, ofstream& outTextFile, int shiftLength) {
 	outTextFile.close();
 }
 
-int main()
-{
+void lab1() {
 	ifstream inFile;
 	ofstream outFile;
 	inFile.open("text.txt");
 	outFile.open("outText.txt");
 	decode(inFile, outFile, 2);
+}
+
+//lab222222222222222222222222
+
+vector<int> getVector(ifstream& inTextFile) {
+
+	vector<int> vec;
+	if (!inTextFile.is_open()) {
+		return vec;
+	}
+	else {
+		
+		int size = 0;
+		string str;
+		getline(inTextFile, str);
+		size = stoi(str);
+		while (!inTextFile.eof()) {
+			str = "";
+			inTextFile >> str;
+			vec.push_back(stoi(str));
+		}
+	}
+	inTextFile.close();
+	return vec;
+}
+
+
+vector<int> sum(vector<vector<int>>& result, const vector<int>& v, int index, vector<int> curComb)
+{
+	if (index < v.size())
+	{
+		curComb.push_back(v[index]);
+		for (int i = index + 1; i < v.size(); ++i)
+		{
+			vector<int> res = sum(result, v, i, curComb);
+			result.push_back(res);
+		}
+	}
+	return curComb;
+}
+
+int sumVector(vector<int> vec) {
+	int sum = 0;
+	for (auto it = vec.begin(); it != vec.end(); it++) {
+		sum += *it;
+	}
+	return sum;
+}
+
+void lab2() {
+	ifstream inFile;
+	ofstream outFile;
+	inFile.open("input2.txt");
+	outFile.open("output2.txt");
+	
+	int count = 0;
+	vector<int> v = getVector(inFile);
+	int n = v.size();
+	v.resize(n);
+
+	vector<vector<int>> combs;
+	for (int i = 0; i < v.size(); ++i)
+	{
+		vector<int> vec;
+		vector<int> res = sum(combs, v, i, vec);
+		combs.push_back(res);
+	}
+
+	for (int i = 0; i < combs.size(); i++) {
+		if (sumVector(combs[i]) % n == 0) {
+			count++;
+		}	
+	}
+	if (count == 0) {
+		outFile << "NO" << endl;
+	}
+	else {
+		outFile << "\n---------\nYES\n---------\n";
+		outFile << endl << count << endl;
+
+		for (int i = 0; i < combs.size(); i++) {
+			if (sumVector(combs[i]) % n == 0) {
+				for (int j = 0; j < combs[i].size(); j++) {
+					outFile << combs[i][j] << "  ";
+				}
+				outFile << endl;
+			}			
+		}
+	}
+}
+
+
+
+int main()
+{
+	lab2();
+	
 }
