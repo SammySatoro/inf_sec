@@ -167,10 +167,27 @@ void lab2() {
 	}
 }
 
+//lab33333333333333333333333333
 
+void generateGrayCodes(int n, ofstream& outFile) {
+	for (int k = (1 << n) - 1; k >= 0; k--) {
+		int s = k ^ (k >> 1);
+		for (int i = 0; i < n; i++) outFile << ((s >> i) & 1);
+		outFile << endl;
+	}
+}
+void lab3() {
+	ofstream outFile;
+	outFile.open("output3.txt");
+	int n = 0;
+	cout << "n = ";
+	cin >> n;
+	generateGrayCodes(n, outFile);
+
+}
 
 int main()
 {
-	lab2();
+	lab3();
 	
 }
