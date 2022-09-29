@@ -20,7 +20,7 @@ string shiftLeftBy(string word, int shiftLength) {
 
 string shiftRightBy(string word, int shiftLength) {
 	string shifted = "";
-	for (int i = word.size() - (shiftLength % size(word)) ; i < size(word); i++) {
+	for (int i = word.size() - (shiftLength % size(word)); i < size(word); i++) {
 		shifted += word[i];
 	}
 	for (int i = 0; i < word.size() - (shiftLength % size(word)); i++) {
@@ -41,15 +41,15 @@ string shiftLineBy(string line, int shiftLength) {
 		if (line[i] != ' ') words[wordIndex] += line[i];
 		if (line[i] != ' ' && line[i + 1] == ' ') {
 			wordIndex++;
-		}	
-	 }
+		}
+	}
 
 	string shifted = "";
 	for (int i = 0; i < wordsSize; i++) {
 		shifted += shiftRightBy(words[i], shiftLength) + ' ';
 		cout << endl << shiftRightBy(words[i], shiftLength) << endl;
 	}
-	
+
 	return shifted;
 }
 
@@ -87,7 +87,7 @@ vector<int> getVector(ifstream& inTextFile) {
 		return vec;
 	}
 	else {
-		
+
 		int size = 0;
 		string str;
 		getline(inTextFile, str);
@@ -130,7 +130,7 @@ void lab2() {
 	ofstream outFile;
 	inFile.open("input2.txt");
 	outFile.open("output2.txt");
-	
+
 	int count = 0;
 	vector<int> v = getVector(inFile);
 	int n = v.size();
@@ -147,7 +147,7 @@ void lab2() {
 	for (int i = 0; i < combs.size(); i++) {
 		if (sumVector(combs[i]) % n == 0) {
 			count++;
-		}	
+		}
 	}
 	if (count == 0) {
 		outFile << "NO" << endl;
@@ -162,7 +162,7 @@ void lab2() {
 					outFile << combs[i][j] << "  ";
 				}
 				outFile << endl;
-			}			
+			}
 		}
 	}
 }
@@ -186,8 +186,33 @@ void lab3() {
 
 }
 
+//lab44444444444444444444444444444
+
+int product(int num) {
+	if (num == 0) return 1;
+	return (num % 10) * product(num / 10);
+}
+
+bool isPrime(int num) {
+	bool flag = true;
+	for (int i = 2; i < num; i++)
+		if (num % i == 0) flag = false;
+	return flag;
+}
+
+void lab4() {
+	ofstream outFile;
+	outFile.open("output4.txt");
+	int n = 9999;
+	int i = 0;
+	for (int i = n; i >= 1; i--) {
+		if (isPrime(i) && product(i) == 243) outFile << i << endl;
+	}
+
+}
+
 int main()
 {
-	lab3();
-	
+	lab4();
+
 }
